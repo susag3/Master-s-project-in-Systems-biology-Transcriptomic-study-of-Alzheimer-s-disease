@@ -1,2 +1,2 @@
-# Master-s-project-in-Systems-biology-Transcriptomic-study-of-Alzheimer-s-disease
+# Master's project in Systems biology
 A comparative analysis of gene expression networks associated with Alzheimer's disease.
