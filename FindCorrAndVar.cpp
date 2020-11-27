@@ -15,11 +15,11 @@ using namespace std;
 
 //Parameters depending on input file
 
-const char* expDataFile = "PCG_Contr.txt"; //Name of expression data file
-const char* outFile = "PCG_Controut.txt"; //Name of output data file
-const int sampleSize = 24; //Number of data points per gene (normally number of individuals from which data is collected, corresponds to columns in the expression data text file)
+const char* expDataFile = "ExpData.txt"; //Name of expression data file
+const char* outFile = "RhoAndVar.txt"; //Name of output data file
+const int sampleSize = 93; //Number of data points per gene (normally number of individuals from which data is collected, corresponds to columns in the expression data text file)
 const int numberOfGenes = 21044;// Number of distinct genes for which there is expression data (corresponds to rows in expression data)
-const int subSampleSize = 2;// of subsamples for determination of variance in co-expression. 10 is a good minimum - can be increased if sampleSize is very large.                                                                      
+const int subSampleSize = 7;// of subsamples for determination of variance in co-expression. 10 is a good minimum - can be increased if sampleSize is very large.                                                                      
 
 
 struct Pair;
