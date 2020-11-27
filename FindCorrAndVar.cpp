@@ -1,4 +1,4 @@
-//Run this before FindCSD.cpp . Run it once on each data set for which you want to find correlations. Correlation and variance is output to RhoAndVar.txt - remember to rename the file before running the next iteration, or your original data will be overwritten. If you want to run the computations for each file in parallel, make a separate folder for each data set, copy this code to that folder and compile there. 
+//Run this before FindCSD.cpp . Run it once on each data set for which you want to find correlations. Correlations are output to RhoAndVar.txt - remember to rename the file before running the next iteration, or your original data will be overwritten. 
 
 #include <ctime>
 #include <stdio.h>
@@ -180,169 +180,6 @@ int main()
 	}
     }
 
-  /*
-  while(nestlevel < 1)
-
-    {
-      for (int i = 0; i < sampleSize; i = i + pow(subSampleSize,(nestlevel+1)))
-	{
-	  for (int j = 0; j < pow(subSampleSize,(2*nestlevel)); j++)
-	    {
-
-	      
-	      
-	      selection++;
-	      nodeCounter = 0;
-
-	      col = i + (j%int((pow(subSampleSize,nestlevel))));
-	      row = i + (i+j-col)/(pow(subSampleSize,nestlevel));
-	      prevNodesID[0] = row;
-	      nodeCounter++;
-	      
-	      while (nodeCounter < subSampleSize && col < sampleSize)
-
-		{
-		  nodeIsOK = 1;
-		  
-		  if (table[row][col] != 2)
-		    {
-		      nodeIsOK = 0;
-		    }
-		  
-		  for (int k = 0; k < nodeCounter; k++)
-		    {
-		      if (table[prevNodesID[k]][col] != 2)
-			{
-			  nodeIsOK = 0;
-			}
-		    }
-
-		  if (nodeIsOK)
-		    {
-		      for (int k = 0; k < nodeCounter; k++)
-			{
-			  table[prevNodesID[k]][col] = 1;
-			  table[col][prevNodesID[k]] = 1;
-			  selectionSequence[prevNodesID[k]][col] = selection;
-			}
-		      
-		      table[row][col] = 1;
-		      table[col][row] = 1;
-		      selectionSequence[row][col] = selection;
-		      prevNodesID[nodeCounter] = col;
-		      nodeCounter++;
-		     
-		      row = col;
-		    }
-		
-		  
-
-		  col++;
-		}
-	      
-	      if (nodeCounter == subSampleSize)
-		{
-
-		  
-		  //cout << "Sample number " << fullSelections << "\n";
-		  Pair newPair;
-		  for (int k = 0; k < numberOfGenes; k++)
-		    {
-		      //cout << k << "\n";
-		      for (int l = k+1; l < numberOfGenes; l++)
-			{
-			  fullSelections[k][l]++;
-			  fullSelections[l][k]++;
-			  list<Pair> subSample;
-			  for (int m = 0; m < subSampleSize; m++)
-			    {
-			      newPair.x = expressionValues[prevNodesID[m]][k];
-			      newPair.y = expressionValues[prevNodesID[m]][l];
-			      subSample.push_back(newPair);
-			      //cout << k << "\t" << l << "\t" << m << "\n";
-			    }
-			  corrcoefs[k][l] = spearman(subSample);
-			  if (!isnan(corrcoefs[k][l]))
-			    {
-			      //cout << corrcoefs[k][l] << "\n"; 
-			      corrcoefAverage[k][l] = corrcoefAverage[k][l] + corrcoefs[k][l];
-			      corrcoefAverageSquare[k][l] = corrcoefAverageSquare[k][l] + pow(corrcoefs[k][l], 2);
-			 
-			      squareDev[k][l] = pow(corrcoefAverageFull[k][l]-corrcoefs[k][l],2);
-			      sumSquareDev[k][l] = sumSquareDev[k][l] + squareDev[k][l];
-
-
-			  
-			      corrcoefs[l][k] = corrcoefs[k][l];
-			      corrcoefAverage[l][k] = corrcoefAverage[k][l];
-			      corrcoefAverageSquare[l][k] = corrcoefAverageSquare[k][l];
-			      squareDev[l][k] = squareDev[k][l];
-			      sumSquareDev[l][k] = sumSquareDev[k][l];
-			      //corrcoefs[k][l].push_back(spearman(subSample));
-			      //cout << k << "\t" << l << "\t" << corrcoefs[k][l].back() <<"\n";
-			      //~subSample();
-			    }
-			  else
-			    {
-			      fullSelections[k][l]--;
-			      fullSelections[l][k]--;
-			    }
-			}     
-		    }
-		  //delete &newPair;
-		}			  
-	      
-	      
-	      //Reset if no full selection
-	      if (nodeCounter < subSampleSize)
-		{
-		  for (int l = 2; l < nodeCounter; l++)
-		    {
-		      table[prevNodesID[0]][prevNodesID[l]] = 2;
-		    }
-		  
-		  for (int k = 1; k < nodeCounter; k++)
-		    {
-		      for (int l = k+1; l < nodeCounter; l++)
-			{
-			  table[prevNodesID[k]][prevNodesID[l]] = 2;
-			}	
-		    }
-		}
-	    
-	    }
-	  
-	}
-    
-      //cout << "LEVEL RAISE, SELECTION NUMBER " << selection << "\n";
-      nestlevel++; 
-    }
-  
-  //Compute mean and standard deviation
-  
-  for (int i = 0; i < numberOfGenes; i++)
-    {
-      for (int j = 0; j < numberOfGenes; j++)
-	{
-	  //corrcoefAverage[i][j] = 0;
-	  //corrcoefAverageSquare[i][j] = 0;
-	  //for (list<double>::iterator it = corrcoefs[i][j].begin(); it != corrcoefs[i][j].end(); it++)
-	  /*
-	  for (int k = 1; k < fullSelections + 1; k++)
-	    {
-	      //corrcoefAverage[i][j] = corrcoefAverage[i][j] + (*it)/corrcoefs[i][j].size();
-	      //corrcoefAverageSquare[i][j] = corrcoefAverageSquare[i][j] + pow((*it),2)/corrcoefs[i][j].size();
-	      //corrcoefAverage[i][j] = corrcoefAverage[i][j] + corrcoefs[i][j][k]/fullSelections;
-	      //corrcoefAverageSquare[i][j] = corrcoefAverageSquare[i][j] + pow(corrcoefs[i][j][k], 2)/fullSelections;
-	    }
-	  
-	  corrcoefAverage[i][j] = corrcoefAverage[i][j] / double(fullSelections[i][j]);
-	  corrcoefAverageSquare[i][j] = corrcoefAverageSquare[i][j] / double(fullSelections[i][j]);
-	  corrcoefVar[i][j] = (corrcoefAverageSquare[i][j] - pow(corrcoefAverageFull[i][j],2))*(fullSelections[i][j])/(fullSelections[i][j]-1);
-	  meanSquareDev[i][j] = sumSquareDev[i][j] / double(fullSelections[i][j]);
-	}
-    }
-  */
 
   outStream.open(outFile);
   for (int i = 0; i < numberOfGenes; i++)
@@ -366,18 +203,6 @@ int main()
 
  outStream.close();
    
- // outStream.open("SubsampleRho");
-
- // for (int i = 0; i < numberOfGenes; i++)
- //    {
- //      for (int j = 0; j < numberOfGenes; j++)
- // 	{
- // 	  outStream << geneName[i] << "\t" << geneName[j] << "\t" << corrcoefAverageFull[i][j] << "\t" << corrcoefAverage[i][j] << "\n";
- // 	}
- //    }
-
-
- // outStream.close();
 }
 
 
@@ -417,11 +242,8 @@ double spearman(list<Pair> subSample)
       
       (*it).xRank = xRank + xTies/2;
       (*it).yRank = yRank + yTies/2;
-      //cout << xRank << "\t" << yRank << "\n";
     }
   double averageRank = (double(subSample.size())+1)/2;
-  //cout << averageRank << "\n"; 
-
   double spearmanNum = 0;
   double spearmanDen1 = 0;
   double spearmanDen2 = 0;
@@ -432,7 +254,6 @@ double spearman(list<Pair> subSample)
       spearmanDen1 = spearmanDen1 + pow(((*it).xRank-averageRank),2);
       spearmanDen2 = spearmanDen2 + pow(((*it).yRank-averageRank),2);
     }
-  //cout << spearmanNum << "\t" << spearmanDen1 << "\t" << spearmanDen2 << "\n";
   spearmanDen1 = sqrt(spearmanDen1);
   spearmanDen2 = sqrt(spearmanDen2);
   
