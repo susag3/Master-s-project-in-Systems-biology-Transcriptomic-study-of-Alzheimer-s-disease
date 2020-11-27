@@ -1,22 +1,22 @@
-#Finds the genes in common for two text files and print it to a new file
+#This script finds the genes in common for two input text files and prints it to a new file. 
+#Used to find genes previously associated with AD in the CSD network.
+
 import pandas as pd 
 
-df1 = pd.read_csv("totaldiseasegenes_sorted.txt", header = None) #input file
+#List of AD-affiliated genes for AD from MalaCards
+df1 = pd.read_csv("totaldiseasegenes_sorted.txt", header = None) 
 df1.columns = ['Gene']
-print(df1)
+
+#list of all genes in the CSD network
 df2 = pd.read_csv("CSD_genelist.txt", header = None)
 df2.columns = ['Gene']
-print(df2)
+
+#Merge dataframes to compare for unique genes
 df = df1.merge(df2, on=["Gene"])
 common_genes=sorted(df["Gene"].drop_duplicates(keep="first").values.tolist())
 print(common_genes[:10], len(common_genes)) #prints first 10 genes and the number of common genes
 
-#common_list =  list(set(list1).intersection(list2)) #intersection (common genes) of list1 and list2
-#common_list.sort() #alphabetical order
-#print(len(common_list)) #number of genes in common
-#diff = set(list1).symmetric_difference(set(list2)) #genes in either, but not both
-#print (diff, len(diff))
-
+#Write the list of AD-related genes in CSD network to a new file
 with open ("ADgenesCSD.txt", "w") as outfile: 
     for gene in common_genes:
         outfile.write(gene) #write gene to file
