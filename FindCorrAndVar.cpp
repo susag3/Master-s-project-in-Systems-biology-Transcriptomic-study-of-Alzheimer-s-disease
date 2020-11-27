@@ -147,8 +147,6 @@ int main()
   double corrcoefAverage[numberOfGenes][numberOfGenes];
   double corrcoefAverageFull[numberOfGenes][numberOfGenes];
 
-  double corrcoefAverageSquare[numberOfGenes][numberOfGenes];
-  double corrcoefVar[numberOfGenes][numberOfGenes];
   double squareDev[numberOfGenes][numberOfGenes];
   double sumSquareDev[numberOfGenes][numberOfGenes];
   double meanSquareDev[numberOfGenes][numberOfGenes];
@@ -159,8 +157,6 @@ int main()
       for (int j = 0; j < numberOfGenes; j++)
 	{
 	  corrcoefAverage[i][j] = 0;
-	  corrcoefAverageSquare[i][j] = 0;
-	  corrcoefVar[i][j] = 0;
 	  sumSquareDev[i][j] = 0;
 	  list<Pair> completeSample;
 	  for (int k = 0; k < sampleSize; k++)
