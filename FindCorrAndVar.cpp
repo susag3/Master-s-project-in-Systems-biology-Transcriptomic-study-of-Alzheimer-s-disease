@@ -1,4 +1,5 @@
-//Run this before FindCSD.cpp . Run it once on each data set for which you want to find correlations. Correlations are output to RhoAndVar.txt - remember to rename the file before running the next iteration, or your original data will be overwritten. 
+//Modified code, no longer calculates variance.
+//Run this before FindCSD.py. Run it once on each data set for which you want to find correlations. Correlations are output to Rho.txt - remember to rename the file before running the next iteration, or your original data will be overwritten. 
 
 #include <ctime>
 #include <stdio.h>
@@ -16,7 +17,7 @@ using namespace std;
 //Parameters depending on input file
 
 const char* expDataFile = "ExpData.txt"; //Name of expression data file
-const char* outFile = "RhoAndVar.txt"; //Name of output data file
+const char* outFile = "Rho.txt"; //Name of output data file
 const int sampleSize = 93; //Number of data points per gene (normally number of individuals from which data is collected, corresponds to columns in the expression data text file)
 const int numberOfGenes = 21044;// Number of distinct genes for which there is expression data (corresponds to rows in expression data)
 const int subSampleSize = 7;// of subsamples for determination of variance in co-expression. 10 is a good minimum - can be increased if sampleSize is very large.                                                                      
