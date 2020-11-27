@@ -1,11 +1,12 @@
 '''
+DEA: Differential Expression Analysis
 This script calculates mean expression of all genes in control and case patients separately.
 Then calculates log2 fold change (difference in mean), raw p-value, T-statistic
 and adjusted p-value (FDR by Benjamini-Hochberg)
-User must change input and output files (lines 12, 17, 51), corresponding to desired tissue calculation
+User must change input and output files (lines 15, 20, 53), corresponding to desired tissue calculation
 '''
 import pandas as pd
-import numpy as np #used for calculating log
+import numpy as np
 from scipy.stats import ttest_ind #T-test
 import matplotlib.pyplot as plt
 from math import log10
@@ -31,8 +32,6 @@ newdf['log2FC'] = log2FC #add log2FC as new column to dataframe
 ##Perform multiple t-test, row-by-row (for every gene in both dataframes)
 df_m = pd.merge(df2, df3, left_index=True, right_index=True)
 T_stat, p_vals = ttest_ind(df_m.iloc[:, df2.shape[1]:-1], df_m.iloc[:, :df2.shape[1]-1], axis=1) #compare y with x
-#print (df_m.iloc[:, df2.shape[1]:-1]) #all rows, all columns from 43 to end (last 19)
-#print(df_m.iloc[:, :df2.shape[1]-1]) #all rows, all columns up until last (43)
 print(f'T-statistic= {T_stat}, Raw p-value = {p_vals}')
 newdf['Raw p-value'] = p_vals #add p-values to new column in dataframe
 newdf['T-statistic'] = np.round(T_stat, decimals = 2) #add T-statistic to new column in dataframe
@@ -46,22 +45,9 @@ def fdr(p_vals): #function that adjusts p-vals, returns Benjamini-Hochberg adjus
 
     return fdr
 
-#import statsmodels.stats.multitest
-#rejected, adjusted_p = statsmodels.stats.multitest.fdrcorrection(p_vals, alpha=0.05, method='indep',  is_sorted=False)
-#print(rejected, adjusted_p)
-#newdf['adjusted p-value'] = np.round(adjusted_p, decimals = 2)
-
 newdf['FDR'] = fdr(p_vals) #perform function and add adjusted P-value
 newdf.sort_values(by=['log2FC'], ascending = False, inplace = True) #sort from highest to lowest log2FC
-#newdf['-log10FDR'] = -(math.log10(fdr(p_vals)))
 print(newdf)
 
-##VOLCANO PLOT##
-plt.scatter(newdf['log2FC'], newdf['FDR'])
-plt.show() 
-#y-axis is -log10(FDR), for example y=7 means that FDR = 10^-7 = 0.0000001, because -log(0.0000001)=7
-
-##Write dataframe to file##
-#newdf.to_csv('diffstats_allregionsold_volcano.txt', index=True, sep = '\t') 
-
-#write top up and down-regulated DEGs to Latex format table
+#Write dataframe to file
+newdf.to_csv('diffstats_allregionsold_volcano.txt', index=True, sep = '\t') 
