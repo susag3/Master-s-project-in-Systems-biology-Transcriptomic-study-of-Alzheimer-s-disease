@@ -1,5 +1,7 @@
-#pip 3 install bioinfokit
-#pip3 install -U scikit-learn
+#This script creates a Volcano plot from the results of DEA.
+#Code based on Bioinfokit, see https://doi.org/10.5281/zenodo.3965241 for parameter information.
+#Need to pip3-install bioinfokit and -U scikit-learn
+
 import numpy as np
 import pandas as pd
 import matplotlib
@@ -8,11 +10,10 @@ import scipy as sp
 import seaborn
 
 from bioinfokit import analys, visuz
-#df = analys.get_data('diffstats_allregionsold.txt').data
-df = pd.read_csv('diffstats_allregionsold_volcano.txt', sep = "\t")
+df = pd.read_csv('diffstats_allregionsold.txt', sep = "\t")
 
 SUB = str.maketrans("0123456789", "₀₁₂₃₄₅₆₇₈₉")
-#VOLCANO PLOT, remember to adjust log2FC threshold 
+#VOLCANO PLOT, remember to adjust log2FC and significance threshold 
 visuz.gene_exp.volcano(df=df, lfc='log2FC', pv = 'FDR', geneid = 'Gene name', lfc_thr=0.2, pv_thr=0.05, \
     plotlegend=True, legendpos='upper right', legendanchor=(1.46,1), color=("#E10600FF", "grey", "#00239CFF"), \
     sign_line=True, genenames=('RGS1', 'CD163', 'LINC01094', 'HLA-DRA', 'ADAMTS2', 'SST', 'BDNF', 'PCDH8', 'MIR7-3HG', 'CALB1'), \
