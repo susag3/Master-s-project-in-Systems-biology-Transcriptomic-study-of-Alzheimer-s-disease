@@ -41,13 +41,11 @@ def fdr(p_vals): #function that adjusts p-vals, returns Benjamini-Hochberg adjus
     ranked_p_values = rankdata(p_vals)
     fdr = p_vals * (len(p_vals) / ranked_p_values)
     fdr[fdr > 1] = 1
-    fdr = -(np.log10(fdr)) #-log10 of all FDR-values, to use in volcano plot
 
     return fdr
 
 newdf['FDR'] = fdr(p_vals) #perform function and add adjusted P-value
 newdf.sort_values(by=['log2FC'], ascending = False, inplace = True) #sort from highest to lowest log2FC
-print(newdf)
 
 #Write dataframe to file
 newdf.to_csv('diffstats_allregionsold.txt', index=True, sep = '\t') 
