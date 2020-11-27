@@ -50,4 +50,4 @@ newdf.sort_values(by=['log2FC'], ascending = False, inplace = True) #sort from h
 print(newdf)
 
 #Write dataframe to file
-newdf.to_csv('diffstats_allregionsold_volcano.txt', index=True, sep = '\t') 
+newdf.to_csv('diffstats_allregionsold.txt', index=True, sep = '\t') 
