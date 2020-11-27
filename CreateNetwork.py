@@ -1,4 +1,4 @@
-#Takes input from 4 files, 'UseableCValues.txt', 'UseableSValues.txt', 'UseableDValues.txt', 'AllValues.txt' (output from findCSD.py) and generates 4 networks - one for each of the C/S/D-type interactions, as well as an aggregate network containing all 3, and a network file including all the rho and var values (from AllValues.txt)
+#Takes input from 4 files, 'UseableCValues.txt', 'UseableSValues.txt', 'UseableDValues.txt', 'AllValues.txt' (output from findCSD.py) and generates 4 networks - one for each of the C/S/D-type interactions, as well as an aggregate network containing all 3, and a network file including all the rho values (from AllValues.txt)
 
 #Outputs selected pairs, along with metric type and value, to SelectedSNodes.txt, SelectedCNodes.txt, SelectedDNodes.txt, and CSDSelection.txt and CSDSelectionDetailed.txt
 
@@ -14,13 +14,13 @@ import math
 import numpy
 import random
 
-selSize = 400000
+selSize = 200000
 noSels = 10000
 
 
-cValueFile = 'UseableCValuesPCG.txt'
-sValueFile = 'UseableSValuesPCG.txt'
-dValueFile = 'UseableDValuesPCG.txt'
+cValueFile = 'UseableCValues.txt'
+sValueFile = 'UseableSValues.txt'
+dValueFile = 'UseableDValues.txt'
 
 f = open(cValueFile)
 
@@ -77,13 +77,13 @@ for i in range(noSels):
 dCutoff = numpy.mean(cutoffAtSel)
 f.close()
 
-cNetF = open('CNetworkoldPCG.txt', 'w')
-sNetF = open('SNetworkoldPCG.txt', 'w')
-dNetF = open('DNetworkoldPCG.txt', 'w')
-csdNetF = open('CSDSelectionoldPCG.txt', 'w')
-detailedF = open('CSDSelectionDetailedoldPCG.txt', 'w')
+cNetF = open('CNetworkold.txt', 'w')
+sNetF = open('SNetworkold.txt', 'w')
+dNetF = open('DNetworkold.txt', 'w')
+csdNetF = open('CSDSelectionold.txt', 'w')
+detailedF = open('CSDSelectionDetailedold.txt', 'w')
 
-f = open('AllValuesPCG.txt')
+f = open('AllValues.txt')
 
 f.readline()
 
