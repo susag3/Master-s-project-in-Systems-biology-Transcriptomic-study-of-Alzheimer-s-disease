@@ -143,15 +143,9 @@ int main()
 	}
     }
   
-  int prevNodesID[subSampleSize];
-  int nodeCounter;
-  bool nodeIsOK;
-  
 
   double corrcoefAverage[numberOfGenes][numberOfGenes];
   double corrcoefAverageFull[numberOfGenes][numberOfGenes];
-
-
 
   double corrcoefAverageSquare[numberOfGenes][numberOfGenes];
   double corrcoefVar[numberOfGenes][numberOfGenes];
@@ -260,5 +254,5 @@ double spearman(list<Pair> subSample)
   return spearmanNum/(spearmanDen1*spearmanDen2);
   
   
-  
+ 
 }
