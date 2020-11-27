@@ -1,4 +1,6 @@
-#Opens file with results from the differential expression analysis
+#This script finds the significantly upregulated and downregulated genes from the DEA, and writes to individual files.
+
+#Opens the outputfile from DEA.py, including all expression changes 
 with open('diffstats_allregionsold_volcano.txt') as f:
     upDEGs = []
     downDEGs = []
